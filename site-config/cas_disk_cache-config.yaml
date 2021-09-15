@@ -1,0 +1,26 @@
+apiVersion: builtin
+kind: PatchTransformer
+metadata:
+  name: cas-cache-hostpath
+patch: |-
+  - op: add
+    path: /spec/controllerTemplate/spec/volumes/-
+    value:
+      name: cas-cache-nvme0
+      hostPath:
+        path: "/mnt/sastmp/cdc"
+  - op: add
+    path: /spec/controllerTemplate/spec/containers/0/volumeMounts/-
+    value:
+      name: cas-cache-nvme0
+      mountPath: /cas/cache-nvme0
+  - op: add
+    path: /spec/controllerTemplate/spec/containers/0/env/-
+    value:
+      name: CASENV_CAS_DISK_CACHE
+      value: "/cas/cache-nvme0"
+target:
+  version: v1alpha1
+  group: viya.sas.com
+  kind: CASDeployment
+  labelSelector: "sas.com/cas-server-default"

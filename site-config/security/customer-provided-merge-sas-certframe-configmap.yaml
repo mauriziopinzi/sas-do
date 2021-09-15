@@ -1,0 +1,7 @@
+apiVersion: builtin
+kind: ConfigMapGenerator
+metadata:
+  name: sas-certframe-user-config
+behavior: merge
+literals:
+- SAS_CERTIFICATE_GENERATOR=openssl
