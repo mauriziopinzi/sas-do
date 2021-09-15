@@ -1,0 +1,26 @@
+apiVersion: orchestration.sas.com/v1alpha1
+kind: SASDeployment
+metadata:
+  annotations:
+    environment.orchestration.sas.com/readOnlyRootFilesystem: "false"
+    operator.sas.com/checksum: ""
+  name: discovery-sasdeployment
+spec:
+  cadenceName: "stable"
+  cadenceVersion: "2021.1.4"
+  cadenceRelease: "20210915.1631684395657"
+  repositoryWarehouse:
+    url: https://ses.sas.download/ses           ## this is the default value
+    updatePolicy: Never                         ## this is the default value. The alternative is 'Releases'
+  # The following is an example of using URLs to specify user
+  # content, a license, a client certificate, and a CA certiciate.
+  userContent:
+    # See HashiCorp's Go Getter "URL Format" documentation for details:
+    #    https://pkg.go.dev/github.com/hashicorp/go-getter@v1.4.1\?tab\=overview\#url-format
+    url: git::https://github.com/mauriziopinzi/sas-do.git
+  license:
+    url: https://raw.githubusercontent.com/mauriziopinzi/sas-do/master/secrets/license/SASViyaV4_license.jwt
+  clientCertificate:
+    url: https://raw.githubusercontent.com/mauriziopinzi/sas-do/master/secrets/entitlement-certificates/entitlement_certificate.pem
+  caCertificate:
+    url: https://raw.githubusercontent.com/mauriziopinzi/sas-do/master/secrets/ca-certificates/SAS_CA_Certificate.pem
