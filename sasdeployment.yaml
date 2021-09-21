@@ -10,7 +10,7 @@ spec:
   cadenceVersion: "2021.1.5"
   cadenceRelease: "20210921.1632183837753"
   repositoryWarehouse:
-    url: https://ses.sas.download/ses           ## this is the default value
+    url: http://repository-warehouse.sasoperator.svc.cluster.local/entitlement           ## this is the default value
     updatePolicy: Never                         ## this is the default value. The alternative is 'Releases'
   # The following is an example of using URLs to specify user
   # content, a license, a client certificate, and a CA certiciate.
