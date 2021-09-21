@@ -4,11 +4,11 @@ metadata:
   annotations:
     environment.orchestration.sas.com/readOnlyRootFilesystem: "false"
     operator.sas.com/checksum: ""
-  name: discovery-sasdeployment
+  name: sasdeployment
 spec:
   cadenceName: "stable"
-  cadenceVersion: "2021.1.4"
-  cadenceRelease: "20210915.1631684395657"
+  cadenceVersion: "2021.1.5"
+  cadenceRelease: "20210921.1632183837753"
   repositoryWarehouse:
     url: https://ses.sas.download/ses           ## this is the default value
     updatePolicy: Never                         ## this is the default value. The alternative is 'Releases'

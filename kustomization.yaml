@@ -1,7 +1,8 @@
 namespace: viya
 resources:
 - sas-bases/base
-- sas-bases/overlays/network/ingress
+- sas-bases/overlays/cert-manager-issuer
+- sas-bases/overlays/network/ingress 
 - sas-bases/overlays/cas-server
 - sas-bases/overlays/internal-postgres
 - sas-bases/overlays/internal-elasticsearch
@@ -12,29 +13,19 @@ configurations:
 transformers:
 - sas-bases/overlays/internal-elasticsearch/sysctl-transformer.yaml
 - sas-bases/overlays/required/transformers.yaml
-- site-config/mirror.yaml
+- site-config/security/cert-manager-provided-ingress-certificate.yaml
 - sas-bases/overlays/cas-server/auto-resources/remove-resources.yaml 
 - sas-bases/overlays/internal-elasticsearch/internal-elasticsearch-transformer.yaml
-- site-config/cas_disk_cache-config.yaml
-#FOR CA Cert
-generators:
-- site-config/security/customer-provided-ingress-certificate.yaml
-- site-config/security/customer-provided-ca-certificates.yaml
-- site-config/security/customer-provided-merge-sas-certframe-configmap.yaml
 components:
 - sas-bases/components/security/core/base/full-stack-tls
 - sas-bases/components/security/network/networking.k8s.io/ingress/nginx.ingress.kubernetes.io/full-stack-tls
 patches:
-- path: site-config/storageclass.yaml
+- path: site-config/storageclass.yaml 
   target:
     kind: PersistentVolumeClaim
-    annotationSelector: sas.com/component-name in (sas-backup-job,sas-data-quality-services,sas-commonfiles,sas-cas-operator)
-secretGenerator:
-- name: sas-image-pull-secrets
-  behavior: replace
-  type: kubernetes.io/dockerconfigjson
-  literals:
-  - '.dockerconfigjson={"auths":{"mapinzviya4aksacr.azurecr.io":{"username":"mapinzviya4aksacr","password":"xTZOWjMG1Cn/kLJPoHSml1TMiuO8XgOs","email":"maurizio.pinzi@sas.com","auth":"bWFwaW56dml5YTRha3NhY3I6eFRaT1dqTUcxQ24va0xKUG9IU21sMVRNaXVPOFhnT3M="}}}'
+    annotationSelector: sas.com/component-name in (sas-backup-job,sas-data-quality-services,sas-commonfiles,sas-cas-operator,sas-pyconfig)
+generators:
+- site-config/security/customer-provided-ca-certificates.yaml
 configMapGenerator:
 - name: ingress-input
   behavior: merge
